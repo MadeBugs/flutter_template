@@ -9,14 +9,14 @@ class ThemeColorPage extends StatefulWidget {
 }
 
 class _ThemeColorPageState extends State<ThemeColorPage> {
-  bool _isDark;
+  late bool _isDark;
 
   @override
   Widget build(BuildContext context) {
     AppTheme appTheme = Provider.of<AppTheme>(context);
     _isDark = appTheme.brightness == Brightness.dark;
     return Scaffold(
-        appBar: AppBar(title: Text(I18n.of(context).theme)),
+        appBar: AppBar(title: Text(I18n.of(context)!.theme)),
         body: CustomScrollView(
           slivers: [
             SliverPadding(
@@ -28,7 +28,7 @@ class _ThemeColorPageState extends State<ThemeColorPage> {
                   //创建列表项
                   return ListTile(
                     title: Text(
-                      I18n.of(context).darkTheme,
+                      I18n.of(context)!.darkTheme,
                       style: TextStyle(
                           color: _isDark
                               ? Colors.white

@@ -26,7 +26,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(I18n.of(context).about)),
+        appBar: AppBar(title: Text(I18n.of(context)!.about)),
         body: Container(
             color: Colors.white,
             child: ListView(children: <Widget>[
@@ -39,7 +39,7 @@ class _AboutPageState extends State<AboutPage> {
                   padding: const EdgeInsets.only(top: 24),
                   child: Center(
                       child: Text(
-                          "${I18n.of(context).versionName}: $_versionName",
+                          "${I18n.of(context)!.versionName}: $_versionName",
                           style: TextStyle(
                               color: Colors.grey[600], fontSize: 17)))),
               SizedBox(height: 15),
@@ -58,7 +58,7 @@ class _AboutPageState extends State<AboutPage> {
                               Icons.assignment_ind,
                               color: Colors.white,
                             ),
-                            title: I18n.of(context).author,
+                            title: I18n.of(context)!.author,
                             titleColor: Colors.white,
                             describe: 'xuexiangjys',
                             describeColor: Colors.white,
@@ -71,7 +71,7 @@ class _AboutPageState extends State<AboutPage> {
                               Icons.supervised_user_circle,
                               color: Colors.white,
                             ),
-                            title: I18n.of(context).qqgroup,
+                            title: I18n.of(context)!.qqgroup,
                             titleColor: Colors.white,
                             describe: '602082750',
                             describeColor: Colors.white,
@@ -100,7 +100,7 @@ class _AboutPageState extends State<AboutPage> {
                               Icons.update,
                               color: Colors.white,
                             ),
-                            title: I18n.of(context).appupdate,
+                            title: I18n.of(context)!.appupdate,
                             titleColor: Colors.white,
                             describeColor: Colors.white,
                             onPressed: () {

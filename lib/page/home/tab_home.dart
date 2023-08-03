@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_template/core/utils/toast.dart';
 import 'package:flutter_template/core/widget/grid/grid_item.dart';
 import 'package:flutter_template/core/widget/list/article_item.dart';
@@ -103,29 +102,7 @@ class _TabHomePageState extends State<TabHomePage> {
   Widget getBannerWidget() {
     return SizedBox(
       height: 200,
-      child: Swiper(
-        autoplay: true,
-        duration: 2000,
-        autoplayDelay: 5000,
-        itemBuilder: (context, index) {
-          return Container(
-            color: Colors.transparent,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
-                child: Image(
-                  fit: BoxFit.fill,
-                  image: CachedNetworkImageProvider(
-                    urls[index],
-                  ),
-                )),
-          );
-        },
-        onTap: (value) {
-          ToastUtils.toast("点击--->" + value.toString());
-        },
-        itemCount: urls.length,
-        pagination: SwiperPagination(),
-      ),
+      child: Container()
     );
   }
 

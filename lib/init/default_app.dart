@@ -54,13 +54,13 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         localeResolutionCallback:
-            (Locale _locale, Iterable<Locale> supportedLocales) {
+            (Locale? _locale, Iterable<Locale> supportedLocales) {
           if (localeModel.getLocale() != null) {
             //如果已经选定语言，则不跟随系统
             return localeModel.getLocale();
           } else {
             //跟随系统
-            Locale systemLocale = LocaleUtils.getSystemLocale();
+            Locale? systemLocale = LocaleUtils.getSystemLocale();
             if (I18n.delegate.isSupported(systemLocale)) {
               return systemLocale;
             }

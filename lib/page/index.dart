@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'menu/menu_drawer.dart';
 
 class MainHomePage extends StatefulWidget {
-  MainHomePage({Key key}) : super(key: key);
+  MainHomePage({Key? key}) : super(key: key);
 
   @override
   _MainHomePageState createState() => _MainHomePageState();
@@ -21,23 +21,23 @@ class MainHomePage extends StatefulWidget {
 class _MainHomePageState extends State<MainHomePage> {
   List<BottomNavigationBarItem> getTabs(BuildContext context) => [
         BottomNavigationBarItem(
-            label: I18n.of(context).home, icon: Icon(Icons.home)),
+            label: I18n.of(context)!.home, icon: Icon(Icons.home)),
         BottomNavigationBarItem(
-            label: I18n.of(context).category, icon: Icon(Icons.list)),
+            label: I18n.of(context)!.category, icon: Icon(Icons.list)),
         BottomNavigationBarItem(
-            label: I18n.of(context).activity, icon: Icon(Icons.local_activity)),
+            label: I18n.of(context)!.activity, icon: Icon(Icons.local_activity)),
         BottomNavigationBarItem(
-            label: I18n.of(context).message, icon: Icon(Icons.notifications)),
+            label: I18n.of(context)!.message, icon: Icon(Icons.notifications)),
         BottomNavigationBarItem(
-            label: I18n.of(context).profile, icon: Icon(Icons.person)),
+            label: I18n.of(context)!.profile, icon: Icon(Icons.person)),
       ];
 
   List<Widget> getTabWidget(BuildContext context) => [
         TabHomePage(),
-        Center(child: Text(I18n.of(context).category)),
-        Center(child: Text(I18n.of(context).activity)),
-        Center(child: Text(I18n.of(context).message)),
-        Center(child: Text(I18n.of(context).profile)),
+        Center(child: Text(I18n.of(context)!.category)),
+        Center(child: Text(I18n.of(context)!.activity)),
+        Center(child: Text(I18n.of(context)!.message)),
+        Center(child: Text(I18n.of(context)!.profile)),
       ];
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -57,12 +57,12 @@ class _MainHomePageState extends State<MainHomePage> {
   Widget build(BuildContext context) {
     var tabs = getTabs(context);
     return Consumer(
-        builder: (BuildContext context, AppStatus status, Widget child) {
+        builder: (BuildContext context, AppStatus status, Widget? child) {
       return WillPopScope(
           child: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              title: Text(tabs[status.tabIndex].label),
+              title: Text(tabs[status.tabIndex].label!),
               actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.security),
@@ -70,7 +70,7 @@ class _MainHomePageState extends State<MainHomePage> {
                       PrivacyUtils.showPrivacyDialog(context,
                           onAgressCallback: () {
                         Navigator.of(context).pop();
-                        ToastUtils.success(I18n.of(context).agreePrivacy);
+                        ToastUtils.success(I18n.of(context)!.agreePrivacy);
                       });
                     }),
                 PopupMenuButton<String>(
@@ -84,7 +84,7 @@ class _MainHomePageState extends State<MainHomePage> {
                               leading: Icon(
                                 Icons.attach_money,
                               ),
-                              title: Text(I18n.of(context).sponsor),
+                              title: Text(I18n.of(context)!.sponsor),
                             ),
                           ),
                           PopupMenuItem<String>(
@@ -95,7 +95,7 @@ class _MainHomePageState extends State<MainHomePage> {
                               leading: Icon(
                                 Icons.settings,
                               ),
-                              title: Text(I18n.of(context).settings),
+                              title: Text(I18n.of(context)!.settings),
                             ),
                           ),
                           PopupMenuItem<String>(
@@ -106,7 +106,7 @@ class _MainHomePageState extends State<MainHomePage> {
                               leading: Icon(
                                 Icons.error_outline,
                               ),
-                              title: Text(I18n.of(context).about),
+                              title: Text(I18n.of(context)!.about),
                             ),
                           ),
                         ],

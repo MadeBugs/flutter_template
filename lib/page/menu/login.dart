@@ -28,11 +28,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    if (!SPUtils.isAgreePrivacy()) {
+    if (!SPUtils.isAgreePrivacy()!) {
       PrivacyUtils.showPrivacyDialog(context, onAgressCallback: () {
         Navigator.of(context).pop();
         SPUtils.saveIsAgreePrivacy(true);
-        ToastUtils.success(I18n.of(context).agreePrivacy);
+        ToastUtils.success(I18n.of(context)!.agreePrivacy);
       });
     }
   }
@@ -43,10 +43,10 @@ class _LoginPageState extends State<LoginPage> {
         child: Scaffold(
           appBar: AppBar(
             // leading: _leading(context),
-            title: Text(I18n.of(context).login),
+            title: Text(I18n.of(context)!.login),
             actions: <Widget>[
               TextButton(
-                child: Text(I18n.of(context).register,
+                child: Text(I18n.of(context)!.register,
                     style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   Get.to(() => RegisterPage());
@@ -87,21 +87,21 @@ class _LoginPageState extends State<LoginPage> {
               autofocus: false,
               controller: _unameController,
               decoration: InputDecoration(
-                  labelText: I18n.of(context).loginName,
-                  hintText: I18n.of(context).loginNameHint,
+                  labelText: I18n.of(context)!.loginName,
+                  hintText: I18n.of(context)!.loginNameHint,
                   hintStyle: TextStyle(fontSize: 12),
                   icon: Icon(Icons.person)),
               //校验用户名
               validator: (v) {
-                return v.trim().length > 0
+                return v!.trim().length > 0
                     ? null
-                    : I18n.of(context).loginNameError;
+                    : I18n.of(context)!.loginNameError;
               }),
           TextFormField(
               controller: _pwdController,
               decoration: InputDecoration(
-                  labelText: I18n.of(context).password,
-                  hintText: I18n.of(context).passwordHint,
+                  labelText: I18n.of(context)!.password,
+                  hintText: I18n.of(context)!.passwordHint,
                   hintStyle: TextStyle(fontSize: 12),
                   icon: Icon(Icons.lock),
                   suffixIcon: IconButton(
@@ -115,9 +115,9 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: !_isShowPassWord,
               //校验密码
               validator: (v) {
-                return v.trim().length >= 6
+                return v!.trim().length >= 6
                     ? null
-                    : I18n.of(context).passwordError;
+                    : I18n.of(context)!.passwordError;
               }),
           // 登录按钮
           Padding(
@@ -129,11 +129,11 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextButton.styleFrom(
                         primary: Theme.of(context).primaryColor,
                         padding: EdgeInsets.all(15.0)),
-                    child: Text(I18n.of(context).login,
+                    child: Text(I18n.of(context)!.login,
                         style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //由于本widget也是Form的子代widget，所以可以通过下面方式获取FormState
-                      if (Form.of(context).validate()) {
+                      if (Form.of(context)!.validate()) {
                         onSubmit(context);
                       }
                     },
@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pop(context);
       if (response['errorCode'] == 0) {
         userProfile.nickName = response['data']['nickname'];
-        ToastUtils.toast(I18n.of(context).loginSuccess);
+        ToastUtils.toast(I18n.of(context)!.loginSuccess);
         Get.off(() => MainHomePage());
       } else {
         ToastUtils.error(response['errorMsg']);

@@ -12,13 +12,13 @@ import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<UserProfile, AppStatus>(builder: (BuildContext context,
-        UserProfile value, AppStatus status, Widget child) {
+        UserProfile value, AppStatus status, Widget? child) {
       return Drawer(
           child: SingleChildScrollView(
         child: Column(
@@ -42,7 +42,7 @@ class MenuDrawer extends StatelessWidget {
                         child: Text(
                       value.nickName != null
                           ? value.nickName
-                          : I18n.of(context).title,
+                          : I18n.of(context)!.title,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class MenuDrawer extends StatelessWidget {
                   //首页
                   ListTile(
                     leading: Icon(Icons.home),
-                    title: Text(I18n.of(context).home),
+                    title: Text(I18n.of(context)!.home),
                     onTap: () {
                       status.tabIndex = TAB_HOME_INDEX;
                       Navigator.pop(context);
@@ -78,7 +78,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(Icons.list),
-                    title: Text(I18n.of(context).category),
+                    title: Text(I18n.of(context)!.category),
                     onTap: () {
                       status.tabIndex = TAB_CATEGORY_INDEX;
                       Navigator.pop(context);
@@ -87,7 +87,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(Icons.local_activity),
-                    title: Text(I18n.of(context).activity),
+                    title: Text(I18n.of(context)!.activity),
                     onTap: () {
                       status.tabIndex = TAB_ACTIVITY_INDEX;
                       Navigator.pop(context);
@@ -96,7 +96,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(Icons.notifications),
-                    title: Text(I18n.of(context).message),
+                    title: Text(I18n.of(context)!.message),
                     onTap: () {
                       status.tabIndex = TAB_MESSAGE_INDEX;
                       Navigator.pop(context);
@@ -105,7 +105,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(Icons.person),
-                    title: Text(I18n.of(context).profile),
+                    title: Text(I18n.of(context)!.profile),
                     onTap: () {
                       status.tabIndex = TAB_PROFILE_INDEX;
                       Navigator.pop(context);
@@ -116,21 +116,21 @@ class MenuDrawer extends StatelessWidget {
                   Divider(height: 1.0, color: Colors.grey),
                   ListTile(
                     leading: Icon(Icons.attach_money),
-                    title: Text(I18n.of(context).sponsor),
+                    title: Text(I18n.of(context)!.sponsor),
                     onTap: () {
                       Get.to(() => SponsorPage());
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
-                    title: Text(I18n.of(context).settings),
+                    title: Text(I18n.of(context)!.settings),
                     onTap: () {
                       Get.to(() => SettingsPage());
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.error_outline),
-                    title: Text(I18n.of(context).about),
+                    title: Text(I18n.of(context)!.about),
                     onTap: () {
                       Get.to(() => AboutPage());
                     },
@@ -139,7 +139,7 @@ class MenuDrawer extends StatelessWidget {
                   Divider(height: 1.0, color: Colors.grey),
                   ListTile(
                     leading: Icon(XUIIcons.logout),
-                    title: Text(I18n.of(context).logout),
+                    title: Text(I18n.of(context)!.logout),
                     onTap: () {
                       value.nickName = "";
                       Get.offAll(() => LoginPage());

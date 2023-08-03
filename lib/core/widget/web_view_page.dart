@@ -15,7 +15,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    String url = Get.parameters['url'];
+    String url = Get.parameters['url']!;
     return WebviewScaffold(
       url: url,
       withLocalStorage: true,
@@ -23,7 +23,7 @@ class _WebViewPageState extends State<WebViewPage> {
       hidden: true,
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(Get.parameters['title'], style: TextStyle(fontSize: 15)),
+        title: Text(Get.parameters['title']!, style: TextStyle(fontSize: 15)),
         titleSpacing: 0,
         actions: <Widget>[
           IconButton(

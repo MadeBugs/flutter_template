@@ -13,7 +13,7 @@ class _LanguagePageState extends State<LanguagePage> {
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
     LocaleModel localeModel = Provider.of<LocaleModel>(context);
-    I18n S = I18n.of(context);
+    I18n S = I18n.of(context)!;
 
     Widget _buildLanguageItem(String lan, value) {
       return ListTile(

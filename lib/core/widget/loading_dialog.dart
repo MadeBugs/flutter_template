@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //loading加载框
 class LoadingDialog extends Dialog {
   //loading动画
-  final Widget loadingView;
+  final Widget? loadingView;
   //提示内容
   final String content;
   //是否显示提示文字
@@ -14,7 +14,7 @@ class LoadingDialog extends Dialog {
   final Color backgroundColor;
 
   LoadingDialog(
-      {Key key,
+      {Key? key,
       this.loadingView,
       this.content = "加载中...",
       this.showContent = true,
@@ -43,7 +43,7 @@ class LoadingDialog extends Dialog {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                loadingView == null ? CircularProgressIndicator() : loadingView,
+                loadingView == null ? CircularProgressIndicator() : loadingView!,
                 showContent
                     ? Padding(
                         padding: const EdgeInsets.only(

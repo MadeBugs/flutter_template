@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).register)),
+      appBar: AppBar(title: Text(I18n.of(context)!.register)),
       body: GestureDetector(
         onTap: () {
           // 点击空白页面关闭键盘
@@ -48,21 +48,21 @@ class _RegisterPageState extends State<RegisterPage> {
               autofocus: false,
               controller: _unameController,
               decoration: InputDecoration(
-                  labelText: I18n.of(context).loginName,
-                  hintText: I18n.of(context).loginNameHint,
+                  labelText: I18n.of(context)!.loginName,
+                  hintText: I18n.of(context)!.loginNameHint,
                   hintStyle: TextStyle(fontSize: 12),
                   icon: Icon(Icons.person)),
               //校验用户名
               validator: (v) {
-                return v.trim().length > 0
+                return v!.trim().length > 0
                     ? null
-                    : I18n.of(context).loginNameError;
+                    : I18n.of(context)!.loginNameError;
               }),
           TextFormField(
               controller: _pwdController,
               decoration: InputDecoration(
-                  labelText: I18n.of(context).password,
-                  hintText: I18n.of(context).passwordHint,
+                  labelText: I18n.of(context)!.password,
+                  hintText: I18n.of(context)!.passwordHint,
                   hintStyle: TextStyle(fontSize: 12),
                   icon: Icon(Icons.lock),
                   suffixIcon: IconButton(
@@ -76,16 +76,16 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: !_isShowPassWord,
               //校验密码
               validator: (v) {
-                return v.trim().length >= 6
+                return v!.trim().length >= 6
                     ? null
-                    : I18n.of(context).passwordError;
+                    : I18n.of(context)!.passwordError;
               }),
 
           TextFormField(
               controller: _pwdRepeatController,
               decoration: InputDecoration(
-                  labelText: I18n.of(context).repeatPassword,
-                  hintText: I18n.of(context).passwordHint,
+                  labelText: I18n.of(context)!.repeatPassword,
+                  hintText: I18n.of(context)!.passwordHint,
                   hintStyle: TextStyle(fontSize: 12),
                   icon: Icon(Icons.lock),
                   suffixIcon: IconButton(
@@ -99,9 +99,9 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: !_isShowPassWordRepeat,
               //校验密码
               validator: (v) {
-                return v.trim().length >= 6
+                return v!.trim().length >= 6
                     ? null
-                    : I18n.of(context).passwordError;
+                    : I18n.of(context)!.passwordError;
               }),
 
           // 登录按钮
@@ -114,11 +114,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextButton.styleFrom(
                         primary: Theme.of(context).primaryColor,
                         padding: EdgeInsets.all(15.0)),
-                    child: Text(I18n.of(context).register,
+                    child: Text(I18n.of(context)!.register,
                         style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //由于本widget也是Form的子代widget，所以可以通过下面方式获取FormState
-                      if (Form.of(context).validate()) {
+                      if (Form.of(context)!.validate()) {
                         onSubmit(context);
                       }
                     },
@@ -172,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }).then((response) {
       Navigator.pop(context);
       if (response['errorCode'] == 0) {
-        ToastUtils.toast(I18n.of(context).registerSuccess);
+        ToastUtils.toast(I18n.of(context)!.registerSuccess);
         Navigator.of(context).pop();
       } else {
         ToastUtils.error(response['errorMsg']);

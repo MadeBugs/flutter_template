@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 /// 列表项
 class GridItem extends StatelessWidget {
   // 文字
-  final String title;
+  final String? title;
   // 颜色
-  final Color color;
+  final Color? color;
   //是否可点击
   final bool enabled;
   //点击事件
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
   // 构造函数
   const GridItem(
-      {Key key, this.title, this.color, this.enabled = true, this.onTap})
+      {Key? key, this.title, this.color, this.enabled = true, this.onTap})
       : super(key: key);
 
   @override
@@ -27,13 +27,13 @@ class GridItem extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 color: color,
-                child: Text(title.substring(0, 1),
+                child: Text(title!.substring(0, 1),
                     style: TextStyle(color: Colors.white, fontSize: 16)),
                 width: 40,
                 height: 40,
               ),
             ),
-            Padding(padding: const EdgeInsets.only(top: 10), child: Text(title, style: TextStyle(fontSize: 14)))
+            Padding(padding: const EdgeInsets.only(top: 10), child: Text(title!, style: TextStyle(fontSize: 14)))
           ]),
         ));
   }

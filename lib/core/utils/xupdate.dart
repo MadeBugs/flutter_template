@@ -29,9 +29,9 @@ class XUpdate {
       }
     });
     FlutterXUpdate.setErrorHandler(
-        onUpdateError: (Map<String, dynamic> message) async {
+        onUpdateError: (Map<String, dynamic>? message) async {
       ///2004是无最新版本
-      if (message['code'] != 2004) {
+      if (message!['code'] != 2004) {
         ///4000是下载失败
         if (message['code'] == 4000) {
           FlutterXUpdate.showRetryUpdateTipDialog(
@@ -54,9 +54,9 @@ class XUpdate {
   ///初始化XUpdate
   static void checkUpdateWithErrorTip({String url = UPDATE_URL}) {
     FlutterXUpdate.setErrorHandler(
-        onUpdateError: (Map<String, dynamic> message) async {
+        onUpdateError: (Map<String, dynamic>? message) async {
       ///4000是下载失败
-      if (message['code'] == 4000) {
+      if (message!['code'] == 4000) {
         FlutterXUpdate.showRetryUpdateTipDialog(
             retryContent: "Github被墙无法继续下载，是否考虑切换蒲公英下载？",
             retryUrl: "https://www.pgyer.com/flutter_learn");

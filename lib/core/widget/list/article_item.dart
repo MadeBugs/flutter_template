@@ -23,7 +23,7 @@ class ArticleListItem extends StatelessWidget {
   final String summary;
 
   const ArticleListItem(
-      {Key key,
+      {Key? key,
       this.articleUrl = '',
       this.imageUrl = '',
       this.title = '这里是标题',

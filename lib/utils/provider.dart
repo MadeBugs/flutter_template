@@ -34,13 +34,13 @@ class Store {
   }
 
   // 不会引起页面的刷新，只刷新了 Consumer 的部分，极大地缩小你的控件刷新范围
-  static Consumer connect<T>({builder, child}) {
+  static Consumer connect<T>({required builder, child}) {
     return Consumer<T>(builder: builder, child: child);
   }
 }
 
 MaterialColor getDefaultTheme() {
-  return AppTheme.materialColors[SPUtils.getThemeIndex()];
+  return AppTheme.materialColors[SPUtils.getThemeIndex()!];
 }
 
 Brightness getDefaultBrightness() {
@@ -102,7 +102,7 @@ const String LOCALE_FOLLOW_SYSTEM = "auto";
 ///语言
 class LocaleModel with ChangeNotifier {
   // 获取当前用户的APP语言配置Locale类，如果为null，则语言跟随系统语言
-  Locale getLocale() {
+  Locale? getLocale() {
     if (_locale == LOCALE_FOLLOW_SYSTEM) return null;
     var t = _locale.split("_");
     return Locale(t[0], t[1]);
@@ -128,11 +128,11 @@ class LocaleModel with ChangeNotifier {
 
 ///用户账户信息
 class UserProfile with ChangeNotifier {
-  String _nickName;
+  String? _nickName;
 
   UserProfile(this._nickName);
 
-  String get nickName => _nickName;
+  String get nickName => _nickName!;
 
   set nickName(String nickName) {
     _nickName = nickName;

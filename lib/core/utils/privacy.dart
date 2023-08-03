@@ -15,56 +15,56 @@ class PrivacyUtils {
       'https://gitee.com/xuexiangjys/flutter_template/raw/master/LICENSE';
 
   static void showPrivacyDialog(BuildContext context,
-      {VoidCallback onAgressCallback}) {
+      {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(I18n.of(context).reminder),
+            title: Text(I18n.of(context)!.reminder),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(I18n.of(context).welcome(packageInfo.appName)),
+                  Text(I18n.of(context)!.welcome(packageInfo.appName)),
                   SizedBox(height: 5),
-                  Text(I18n.of(context).welcome1),
+                  Text(I18n.of(context)!.welcome1),
                   SizedBox(height: 5),
                   Text.rich(TextSpan(children: [
-                    TextSpan(text: I18n.of(context).welcome2),
+                    TextSpan(text: I18n.of(context)!.welcome2),
                     TextSpan(
-                        text: I18n.of(context).privacyName(packageInfo.appName),
+                        text: I18n.of(context)!.privacyName(packageInfo.appName),
                         style: TextStyle(color: Theme.of(context).primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             XRouter.goWeb(
                                 PRIVACY_URL,
-                                I18n.of(context)
+                                I18n.of(context)!
                                     .privacyName(packageInfo.appName));
                           }),
-                    TextSpan(text: I18n.of(context).welcome3),
+                    TextSpan(text: I18n.of(context)!.welcome3),
                   ])),
                   SizedBox(height: 5),
                   Text.rich(TextSpan(children: [
-                    TextSpan(text: I18n.of(context).welcome4),
+                    TextSpan(text: I18n.of(context)!.welcome4),
                     TextSpan(
-                        text: I18n.of(context).privacyName(packageInfo.appName),
+                        text: I18n.of(context)!.privacyName(packageInfo.appName),
                         style: TextStyle(color: Theme.of(context).primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             XRouter.goWeb(
                                 PRIVACY_URL,
-                                I18n.of(context)
+                                I18n.of(context)!
                                     .privacyName(packageInfo.appName));
                           }),
-                    TextSpan(text: I18n.of(context).welcome5),
+                    TextSpan(text: I18n.of(context)!.welcome5),
                   ])),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(I18n.of(context).disagree),
+                child: Text(I18n.of(context)!.disagree),
                 onPressed: () {
                   Navigator.of(context).pop();
                   showPrivacySecond(context,
@@ -72,7 +72,7 @@ class PrivacyUtils {
                 },
               ),
               TextButton(
-                child: Text(I18n.of(context).agree),
+                child: Text(I18n.of(context)!.agree),
                 onPressed: onAgressCallback == null
                     ? () {
                         Navigator.of(context).pop();
@@ -88,32 +88,32 @@ class PrivacyUtils {
 
   ///第二次提醒
   static void showPrivacySecond(BuildContext context,
-      {VoidCallback onAgressCallback}) {
+      {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(I18n.of(context).reminder),
+            title: Text(I18n.of(context)!.reminder),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(I18n.of(context)
+                  Text(I18n.of(context)!
                       .privacyExplainAgain(packageInfo.appName)),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(I18n.of(context).stillDisagree),
+                child: Text(I18n.of(context)!.stillDisagree),
                 onPressed: () {
                   Navigator.of(context).pop();
                   showPrivacyThird(context, onAgressCallback: onAgressCallback);
                 },
               ),
               TextButton(
-                child: Text(I18n.of(context).lookAgain),
+                child: Text(I18n.of(context)!.lookAgain),
                 onPressed: () {
                   Navigator.of(context).pop();
                   showPrivacyDialog(context,
@@ -129,7 +129,7 @@ class PrivacyUtils {
 
   ///第三次提醒
   static void showPrivacyThird(BuildContext context,
-      {VoidCallback onAgressCallback}) {
+      {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
@@ -139,13 +139,13 @@ class PrivacyUtils {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(I18n.of(context).thinkAboutItAgain),
+                  Text(I18n.of(context)!.thinkAboutItAgain),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(I18n.of(context).exitApp),
+                child: Text(I18n.of(context)!.exitApp),
                 onPressed: () {
                   //退出程序
                   // SystemNavigator.pop();
@@ -153,7 +153,7 @@ class PrivacyUtils {
                 },
               ),
               TextButton(
-                child: Text(I18n.of(context).lookAgain),
+                child: Text(I18n.of(context)!.lookAgain),
                 onPressed: () {
                   Navigator.of(context).pop();
                   showPrivacyDialog(context,
