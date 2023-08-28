@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/generated/i18n.dart';
-import 'package:provider/provider.dart';
-
 import 'sputils.dart';
+
+final appStatusProvider = StateNotifierProvider<AppTabIndex, int>((ref) {
+  return AppTabIndex(TAB_HOME_INDEX);
+});
+
+final userProfileProvider = Provider<UserProfile>((ref) {
+  return UserProfile(SPUtils.getNickName());
+});
 
 //状态管理
 class Store {
@@ -11,32 +18,34 @@ class Store {
   //全局初始化
   static init(Widget child) {
     //多个Provider
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (_) => AppTheme(getDefaultTheme(), getDefaultBrightness())),
-        ChangeNotifierProvider.value(value: LocaleModel(SPUtils.getLocale())),
-        ChangeNotifierProvider.value(value: UserProfile(SPUtils.getNickName())),
-        ChangeNotifierProvider.value(value: AppStatus(TAB_HOME_INDEX)),
-      ],
-      child: child,
-    );
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(
+    //         create: (_) => AppTheme(getDefaultTheme(), getDefaultBrightness())),
+    //     ChangeNotifierProvider.value(value: LocaleModel(SPUtils.getLocale())),
+    //     ChangeNotifierProvider.value(value: UserProfile(SPUtils.getNickName())),
+    //     ChangeNotifierProvider.value(value: AppStatus(TAB_HOME_INDEX)),
+    //   ],
+    //   child: child,
+    // );
+    return ProviderScope(child: child);
   }
 
   //获取值 of(context)  这个会引起页面的整体刷新，如果全局是页面级别的
-  static T value<T>(BuildContext context, {bool listen = false}) {
-    return Provider.of<T>(context, listen: listen);
-  }
+  // static T value<T>(BuildContext context, {bool listen = false}) {
+  //   // return Provider.of<T>(context, listen: listen);
+  //   // return Provider.of<T>(context);
+  // }
 
   //获取值 of(context)  这个会引起页面的整体刷新，如果全局是页面级别的
-  static T of<T>(BuildContext context, {bool listen = true}) {
-    return Provider.of<T>(context, listen: listen);
-  }
+  // static T of<T>(BuildContext context, {bool listen = true}) {
+  //   return provider.Provider.of<T>(context, listen: listen);
+  // }
 
   // 不会引起页面的刷新，只刷新了 Consumer 的部分，极大地缩小你的控件刷新范围
-  static Consumer connect<T>({required builder, child}) {
-    return Consumer<T>(builder: builder, child: child);
-  }
+  // static Consumer connect<T>({required builder, child}) {
+  //   return Consumer<T>(builder: builder, child: child);
+  // }
 }
 
 MaterialColor getDefaultTheme() {
@@ -47,8 +56,16 @@ Brightness getDefaultBrightness() {
   return SPUtils.getBrightness();
 }
 
+class AppThemeClass {
+  MaterialColor themeColor;
+
+  Brightness brightness;
+
+  AppThemeClass(this.themeColor, this.brightness);
+}
+
 ///主题
-class AppTheme with ChangeNotifier {
+class AppTheme extends StateNotifier<AppThemeClass> {
   static final List<MaterialColor> materialColors = [
     Colors.blue,
     Colors.lightBlue,
@@ -68,27 +85,29 @@ class AppTheme with ChangeNotifier {
 
   Brightness _brightness;
 
-  AppTheme(this._themeColor, this._brightness);
+  AppThemeClass appThemeClass;
+
+  AppTheme(this.appThemeClass)
+      : _themeColor = appThemeClass.themeColor,
+        _brightness = appThemeClass.brightness,
+        super(appThemeClass);
 
   void setColor(MaterialColor color) {
     _themeColor = color;
-    notifyListeners();
   }
 
   void changeColor(int index) {
     _themeColor = materialColors[index];
     SPUtils.saveThemeIndex(index);
-    notifyListeners();
+    state = AppThemeClass(_themeColor, _brightness);
   }
 
-  void setBrightness(bool isLight) {
-    notifyListeners();
-  }
+  void setBrightness(bool isLight) {}
 
   void changeBrightness(bool isDark) {
     _brightness = isDark ? Brightness.dark : Brightness.light;
     SPUtils.saveBrightness(isDark);
-    notifyListeners();
+    state = AppThemeClass(_themeColor, _brightness);
   }
 
   get themeColor => _themeColor;
@@ -100,7 +119,7 @@ class AppTheme with ChangeNotifier {
 const String LOCALE_FOLLOW_SYSTEM = "auto";
 
 ///语言
-class LocaleModel with ChangeNotifier {
+class LocaleModel extends StateNotifier<Locale?> {
   // 获取当前用户的APP语言配置Locale类，如果为null，则语言跟随系统语言
   Locale? getLocale() {
     if (_locale == LOCALE_FOLLOW_SYSTEM) return null;
@@ -110,7 +129,7 @@ class LocaleModel with ChangeNotifier {
 
   String _locale = LOCALE_FOLLOW_SYSTEM;
 
-  LocaleModel(this._locale);
+  LocaleModel(this._locale) : super(_locale == "auto" ? null : Locale(_locale.split("_")[0], _locale.split("_")[1]));
 
   // 获取当前Locale的字符串表示
   String get locale => _locale;
@@ -121,7 +140,7 @@ class LocaleModel with ChangeNotifier {
       _locale = locale;
       I18n.locale = getLocale();
       SPUtils.saveLocale(_locale);
-      notifyListeners();
+      state = getLocale();
     }
   }
 }
@@ -157,16 +176,13 @@ const int TAB_MESSAGE_INDEX = 3;
 const int TAB_PROFILE_INDEX = 4;
 
 ///应用状态
-class AppStatus with ChangeNotifier {
-  //主页tab的索引
+class AppTabIndex extends StateNotifier<int> {
   int _tabIndex;
-
-  AppStatus(this._tabIndex);
+  AppTabIndex(this._tabIndex) : super(_tabIndex);
 
   int get tabIndex => _tabIndex;
 
-  set tabIndex(int index) {
-    _tabIndex = index;
-    notifyListeners();
+  void change(int index) {
+    state = index;
   }
 }

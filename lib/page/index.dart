@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/core/utils/click.dart';
 import 'package:flutter_template/core/utils/privacy.dart';
 import 'package:flutter_template/core/utils/toast.dart';
@@ -6,18 +7,20 @@ import 'package:flutter_template/core/utils/xupdate.dart';
 import 'package:flutter_template/generated/i18n.dart';
 import 'package:flutter_template/page/home/tab_home.dart';
 import 'package:flutter_template/utils/provider.dart';
-import 'package:provider/provider.dart';
 
 import 'menu/menu_drawer.dart';
 
-class MainHomePage extends StatefulWidget {
+class MainHomePage extends ConsumerStatefulWidget {
   MainHomePage({Key? key}) : super(key: key);
-
+  
   @override
-  _MainHomePageState createState() => _MainHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _MainHomePageState();
+  }
 }
 
-class _MainHomePageState extends State<MainHomePage> {
+class _MainHomePageState extends ConsumerState<MainHomePage> {
+  
   List<BottomNavigationBarItem> getTabs(BuildContext context) => [
         BottomNavigationBarItem(
             label: I18n.of(context)!.home, icon: Icon(Icons.home)),
@@ -52,16 +55,16 @@ class _MainHomePageState extends State<MainHomePage> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final status = ref.watch(appStatusProvider);
     var tabs = getTabs(context);
-    return Consumer(
-        builder: (BuildContext context, AppStatus status, Widget? child) {
-      return WillPopScope(
+    return WillPopScope(
           child: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              title: Text(tabs[status.tabIndex].label!),
+              title: Text(tabs[status].label!),
               actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.security),
@@ -116,16 +119,18 @@ class _MainHomePageState extends State<MainHomePage> {
             ),
             drawer: MenuDrawer(),
             body: IndexedStack(
-              index: status.tabIndex,
+              index: status,
               children: getTabWidget(context),
             ),
             bottomNavigationBar: BottomNavigationBar(
               items: tabs,
               //高亮  被点击高亮
-              currentIndex: status.tabIndex,
+              currentIndex: status,
               //修改 页面
               onTap: (index) {
-                status.tabIndex = index;
+                // status.tabIndex = index;
+                ref.read(appStatusProvider.notifier).change(index);
+                
               },
               type: BottomNavigationBarType.fixed,
               fixedColor: Theme.of(context).primaryColor,
@@ -134,6 +139,5 @@ class _MainHomePageState extends State<MainHomePage> {
           //监听导航栏返回,类似onKeyEvent
           onWillPop: () =>
               ClickUtils.exitBy2Click(status: _scaffoldKey.currentState));
-    });
   }
 }

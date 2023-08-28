@@ -3,7 +3,6 @@ import 'package:flutter_template/core/utils/utils.dart';
 import 'package:flutter_template/core/utils/xupdate.dart';
 import 'package:flutter_template/core/widget/list/list_item.dart';
 import 'package:flutter_template/generated/i18n.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
   @override

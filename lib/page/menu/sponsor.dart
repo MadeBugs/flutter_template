@@ -25,6 +25,7 @@ class _SponsorPageState extends State<SponsorPage> {
             ])));
   }
 
+  // ignore: unused_element
   Widget _loadImage(String url, {String linkUrl = ''}) => SizedBox(
         width: 166,
         height: 249,

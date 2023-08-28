@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/generated/i18n.dart';
+import 'package:flutter_template/init/default_app.dart';
 import 'package:flutter_template/utils/provider.dart';
-import 'package:provider/provider.dart';
 
-class ThemeColorPage extends StatefulWidget {
+class ThemeColorPage extends ConsumerStatefulWidget {
   @override
   _ThemeColorPageState createState() => _ThemeColorPageState();
 }
 
-class _ThemeColorPageState extends State<ThemeColorPage> {
+class _ThemeColorPageState extends ConsumerState<ThemeColorPage> {
   late bool _isDark;
 
   @override
   Widget build(BuildContext context) {
-    AppTheme appTheme = Provider.of<AppTheme>(context);
+    // AppTheme appTheme = Provider.of<AppTheme>(context);
+    final appTheme = ref.watch(appthemeProvider);
     _isDark = appTheme.brightness == Brightness.dark;
     return Scaffold(
         appBar: AppBar(title: Text(I18n.of(context)!.theme)),
@@ -37,7 +39,8 @@ class _ThemeColorPageState extends State<ThemeColorPage> {
                     trailing: Switch(
                       value: _isDark,
                       onChanged: (value) {
-                        Store.value<AppTheme>(context).changeBrightness(value);
+                        // Store.value<AppTheme>(context).changeBrightness(value);
+                        ref.read(appthemeProvider.notifier).changeBrightness(value);
                       },
                     ),
                   );
@@ -52,7 +55,9 @@ class _ThemeColorPageState extends State<ThemeColorPage> {
                         //创建子widget
                         return GestureDetector(
                           onTap: () {
-                            Store.value<AppTheme>(context).changeColor(index);
+                            // Store.value<AppTheme>(context).changeColor(index);
+                            // appTheme.changeColor(index);
+                            ref.read(appthemeProvider.notifier).changeColor(index);
                           },
                           child:
                               Container(color: AppTheme.materialColors[index]),

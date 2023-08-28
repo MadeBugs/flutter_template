@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/generated/i18n.dart';
+import 'package:flutter_template/init/default_app.dart';
 import 'package:flutter_template/utils/provider.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
-class LanguagePage extends StatefulWidget {
+class LanguagePage extends ConsumerStatefulWidget {
   @override
   _LanguagePageState createState() => _LanguagePageState();
 }
 
-class _LanguagePageState extends State<LanguagePage> {
+class _LanguagePageState extends ConsumerState<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
-    LocaleModel localeModel = Provider.of<LocaleModel>(context);
+    final locale = ref.watch(localProvider);
     I18n S = I18n.of(context)!;
 
     Widget _buildLanguageItem(String lan, value) {
@@ -20,13 +22,12 @@ class _LanguagePageState extends State<LanguagePage> {
         title: Text(
           lan,
           // 对APP当前语言进行高亮显示
-          style: TextStyle(color: localeModel.locale == value ? color : null),
+          style: TextStyle(color: locale == value ? color : null),
         ),
-        trailing:
-            localeModel.locale == value ? Icon(Icons.done, color: color) : null,
+        trailing: locale == value ? Icon(Icons.done, color: color) : null,
         onTap: () {
           // 此行代码会通知MaterialApp重新build
-          localeModel.locale = value;
+          ref.read(localProvider.notifier).locale = value;
         },
       );
     }
