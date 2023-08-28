@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_template/core/http/http.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_template/page/index.dart';
 import 'package:flutter_template/page/menu/register.dart';
 import 'package:flutter_template/utils/provider.dart';
 import 'package:flutter_template/utils/sputils.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -49,7 +49,11 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(I18n.of(context)!.register,
                     style: TextStyle(color: Colors.white)),
                 onPressed: () {
-                  Get.to(() => RegisterPage());
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return RegisterPage();
+                    },
+                  ));
                 },
               )
             ],
@@ -127,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                 Expanded(child: Builder(builder: (context) {
                   return ElevatedButton(
                     style: TextButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
+                        foregroundColor: Theme.of(context).primaryColor,
                         padding: EdgeInsets.all(15.0)),
                     child: Text(I18n.of(context)!.login,
                         style: TextStyle(color: Colors.white)),
@@ -162,6 +166,13 @@ class _LoginPageState extends State<LoginPage> {
   void onSubmit(BuildContext context) {
     closeKeyboard(context);
 
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) {
+            return MainHomePage();
+          },
+        ));
+        return;
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -183,7 +194,11 @@ class _LoginPageState extends State<LoginPage> {
       if (response['errorCode'] == 0) {
         userProfile.nickName = response['data']['nickname'];
         ToastUtils.toast(I18n.of(context)!.loginSuccess);
-        Get.off(() => MainHomePage());
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) {
+            return MainHomePage();
+          },
+        ));
       } else {
         ToastUtils.error(response['errorMsg']);
       }

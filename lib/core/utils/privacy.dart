@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/generated/i18n.dart';
-import 'package:flutter_template/router/router.dart';
 import 'utils.dart';
 
 //隐私弹窗工具
@@ -11,11 +10,9 @@ class PrivacyUtils {
   PrivacyUtils._internal();
 
   //隐私服务政策地址
-  static const PRIVACY_URL =
-      'https://gitee.com/xuexiangjys/flutter_template/raw/master/LICENSE';
+  static const PRIVACY_URL = 'https://gitee.com/xuexiangjys/flutter_template/raw/master/LICENSE';
 
-  static void showPrivacyDialog(BuildContext context,
-      {VoidCallback? onAgressCallback}) {
+  static void showPrivacyDialog(BuildContext context, {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
@@ -37,10 +34,10 @@ class PrivacyUtils {
                         style: TextStyle(color: Theme.of(context).primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            XRouter.goWeb(
-                                PRIVACY_URL,
-                                I18n.of(context)!
-                                    .privacyName(packageInfo.appName));
+                            Navigator.of(context).pushNamed("/web", arguments: {
+                              "url": "$PRIVACY_URL",
+                              "title": "${I18n.of(context)!.privacyName(packageInfo.appName)}"
+                            });
                           }),
                     TextSpan(text: I18n.of(context)!.welcome3),
                   ])),
@@ -52,10 +49,10 @@ class PrivacyUtils {
                         style: TextStyle(color: Theme.of(context).primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            XRouter.goWeb(
-                                PRIVACY_URL,
-                                I18n.of(context)!
-                                    .privacyName(packageInfo.appName));
+                            Navigator.of(context).pushNamed("/web", arguments: {
+                              "url": "${Uri.encodeComponent(PRIVACY_URL)}",
+                              "title": "${Uri.encodeComponent(I18n.of(context)!.privacyName(packageInfo.appName))}"
+                            });
                           }),
                     TextSpan(text: I18n.of(context)!.welcome5),
                   ])),
@@ -67,8 +64,7 @@ class PrivacyUtils {
                 child: Text(I18n.of(context)!.disagree),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  showPrivacySecond(context,
-                      onAgressCallback: onAgressCallback);
+                  showPrivacySecond(context, onAgressCallback: onAgressCallback);
                 },
               ),
               TextButton(
@@ -87,8 +83,7 @@ class PrivacyUtils {
   }
 
   ///第二次提醒
-  static void showPrivacySecond(BuildContext context,
-      {VoidCallback? onAgressCallback}) {
+  static void showPrivacySecond(BuildContext context, {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
@@ -99,8 +94,7 @@ class PrivacyUtils {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(I18n.of(context)!
-                      .privacyExplainAgain(packageInfo.appName)),
+                  Text(I18n.of(context)!.privacyExplainAgain(packageInfo.appName)),
                 ],
               ),
             ),
@@ -116,8 +110,7 @@ class PrivacyUtils {
                 child: Text(I18n.of(context)!.lookAgain),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  showPrivacyDialog(context,
-                      onAgressCallback: onAgressCallback);
+                  showPrivacyDialog(context, onAgressCallback: onAgressCallback);
                 },
               ),
             ],
@@ -128,8 +121,7 @@ class PrivacyUtils {
   }
 
   ///第三次提醒
-  static void showPrivacyThird(BuildContext context,
-      {VoidCallback? onAgressCallback}) {
+  static void showPrivacyThird(BuildContext context, {VoidCallback? onAgressCallback}) {
     Utils.getPackageInfo().then((packageInfo) {
       showDialog(
         context: context,
@@ -156,8 +148,7 @@ class PrivacyUtils {
                 child: Text(I18n.of(context)!.lookAgain),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  showPrivacyDialog(context,
-                      onAgressCallback: onAgressCallback);
+                  showPrivacyDialog(context, onAgressCallback: onAgressCallback);
                 },
               ),
             ],

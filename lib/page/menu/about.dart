@@ -60,10 +60,10 @@ class _AboutPageState extends State<AboutPage> {
                             ),
                             title: I18n.of(context)!.author,
                             titleColor: Colors.white,
-                            describe: 'xuexiangjys',
+                            describe: '打工人',
                             describeColor: Colors.white,
                             onPressed: () {
-                              launch('https://github.com/xuexiangjys');
+                              
                             },
                           ),
                           ListItem(
@@ -73,11 +73,10 @@ class _AboutPageState extends State<AboutPage> {
                             ),
                             title: I18n.of(context)!.qqgroup,
                             titleColor: Colors.white,
-                            describe: '602082750',
+                            describe: '',
                             describeColor: Colors.white,
                             onPressed: () {
-                              launch(
-                                  'http://qm.qq.com/cgi-bin/qm/qr?k=tiP-E6rDf0y77PRNfp2lNVcc9RsglPCM');
+                              
                             },
                           ),
                           ListItem(
@@ -88,11 +87,10 @@ class _AboutPageState extends State<AboutPage> {
                             title: "Github",
                             titleColor: Colors.white,
                             describe:
-                                'https://github.com/xuexiangjys/flutter_template',
+                                '',
                             describeColor: Colors.white,
                             onPressed: () {
-                              launch(
-                                  'https://github.com/xuexiangjys/flutter_template');
+                             
                             },
                           ),
                           ListItem(

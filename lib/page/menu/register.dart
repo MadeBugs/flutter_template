@@ -112,8 +112,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 Expanded(child: Builder(builder: (context) {
                   return ElevatedButton(
                     style: TextButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                        padding: EdgeInsets.all(15.0)),
+                      foregroundColor: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.all(15.0),
+                    ),
                     child: Text(I18n.of(context)!.register,
                         style: TextStyle(color: Colors.white)),
                     onPressed: () {

@@ -7,7 +7,6 @@ import 'package:flutter_template/page/menu/login.dart';
 import 'package:flutter_template/page/menu/settings.dart';
 import 'package:flutter_template/page/menu/sponsor.dart';
 import 'package:flutter_template/utils/provider.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -40,7 +39,7 @@ class MenuDrawer extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                      value.nickName != null
+                      value.nickName.length > 0
                           ? value.nickName
                           : I18n.of(context)!.title,
                       overflow: TextOverflow.ellipsis,
@@ -118,21 +117,27 @@ class MenuDrawer extends StatelessWidget {
                     leading: Icon(Icons.attach_money),
                     title: Text(I18n.of(context)!.sponsor),
                     onTap: () {
-                      Get.to(() => SponsorPage());
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SponsorPage(),
+                      ));
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text(I18n.of(context)!.settings),
                     onTap: () {
-                      Get.to(() => SettingsPage());
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingsPage(),
+                      ));
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.error_outline),
                     title: Text(I18n.of(context)!.about),
                     onTap: () {
-                      Get.to(() => AboutPage());
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AboutPage(),
+                      ));
                     },
                   ),
                   //退出
@@ -142,7 +147,11 @@ class MenuDrawer extends StatelessWidget {
                     title: Text(I18n.of(context)!.logout),
                     onTap: () {
                       value.nickName = "";
-                      Get.offAll(() => LoginPage());
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                          (Route<dynamic> route) => false);
                     },
                   )
                 ],

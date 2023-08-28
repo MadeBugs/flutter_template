@@ -45,7 +45,7 @@ class XUpdate {
   }
 
   ///初始化XUpdate
-  static void checkUpdate(String url) {
+  static void checkUpdate(String? url) {
     if (url != null && url.isNotEmpty) {
       FlutterXUpdate.checkUpdate(url: url, widthRatio: 0.7);
     }

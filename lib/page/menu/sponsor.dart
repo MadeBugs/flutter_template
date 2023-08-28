@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_template/core/utils/toast.dart';
 import 'package:flutter_template/core/utils/utils.dart';
 import 'package:flutter_template/generated/i18n.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
 
@@ -21,13 +22,6 @@ class _SponsorPageState extends State<SponsorPage> {
             child: Column(children: <Widget>[
               Text(I18n.of(context)!.sponsorDescription,
                   style: TextStyle(color: Colors.grey[700], fontSize: 15)),
-              SizedBox(height: 15),
-              _loadImage(
-                  "https://gitee.com/xuexiangjys/Resource/raw/master/img/pay/alipay.jpeg",
-                  linkUrl: "https://qr.alipay.com/fkx14433o4e5gqkhi9fsr2f"),
-              SizedBox(height: 15),
-              _loadImage(
-                  "https://gitee.com/xuexiangjys/Resource/raw/master/img/pay/weixinpay.jpeg"),
             ])));
   }
 
@@ -100,11 +94,9 @@ class _SponsorPageState extends State<SponsorPage> {
     });
   }
 
-  Future<String> saveNetworkImageToPhoto(String url,
-      {bool useCache: true}) async {
+  Future<String?> saveNetworkImageToPhoto(String url, {bool useCache: true}) async {
     var data = await getNetworkImageData(url, useCache: useCache);
-    return Future.value('');
-    // return await ImagePickerSaver.saveFile(fileData: data);
+    return await ImageGallerySaver.saveImage(data!);
   }
 
   void shareImage(String url) {

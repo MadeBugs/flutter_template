@@ -132,7 +132,7 @@ class UserProfile with ChangeNotifier {
 
   UserProfile(this._nickName);
 
-  String get nickName => _nickName!;
+  String get nickName => _nickName ?? "";
 
   set nickName(String nickName) {
     _nickName = nickName;

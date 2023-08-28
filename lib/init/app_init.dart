@@ -17,20 +17,20 @@ class AppInit {
     FlutterError.onError = (FlutterErrorDetails details) {
       reportErrorAndLog(details);
     };
-    runZoned<Future<Null>>(
+
+    runZonedGuarded(
       () async {
         callback();
       },
+      ((error, stack) {
+        FlutterErrorDetails details = makeDetails(error, stack);
+        reportErrorAndLog(details);
+      }),
       zoneSpecification: ZoneSpecification(
         print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
           collectLog(parent, zone, line); // 收集日志
         },
       ),
-      //未捕获的异常的回调
-      onError: (Object obj, StackTrace stack) {
-        var details = makeDetails(obj, stack);
-        reportErrorAndLog(details);
-      },
     );
   }
 

@@ -7,7 +7,6 @@ import 'package:flutter_template/generated/i18n.dart';
 import 'package:flutter_template/router/route_map.dart';
 import 'package:flutter_template/utils/provider.dart';
 import 'package:flutter_template/utils/sputils.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 //默认App的启动
@@ -34,17 +33,21 @@ class DefaultApp {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer2<AppTheme, LocaleModel>(
-        builder: (context, appTheme, localeModel, _) {
-      return GetMaterialApp(
+    return Consumer2<AppTheme, LocaleModel>(builder: (context, appTheme, localeModel, _) {
+      return MaterialApp(
         title: 'Flutter Project',
         theme: ThemeData(
-          brightness: appTheme.brightness,
-          primarySwatch: appTheme.themeColor,
-          buttonColor: appTheme.themeColor,
+            brightness: appTheme.brightness,
+            primarySwatch: appTheme.themeColor,
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(appTheme.themeColor),
+              ),
+            ),
         ),
-        getPages: RouteMap.getPages,
-        defaultTransition: Transition.rightToLeft,
+        // getPages: RouteMap.getPages,
+        // defaultTransition: Transition.rightToLeft,
+        routes: RouteMap.routers,
         locale: localeModel.getLocale(),
         supportedLocales: I18n.delegate.supportedLocales,
         localizationsDelegates: [
@@ -53,8 +56,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        localeResolutionCallback:
-            (Locale? _locale, Iterable<Locale> supportedLocales) {
+        localeResolutionCallback: (Locale? _locale, Iterable<Locale> supportedLocales) {
           if (localeModel.getLocale() != null) {
             //如果已经选定语言，则不跟随系统
             return localeModel.getLocale();

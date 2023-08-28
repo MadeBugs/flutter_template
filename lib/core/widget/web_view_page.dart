@@ -1,8 +1,7 @@
 import 'dart:core';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:get/get.dart';
 import 'package:share/share.dart';
 
 class WebViewPage extends StatefulWidget {
@@ -15,15 +14,25 @@ class _WebViewPageState extends State<WebViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    String url = Get.parameters['url']!;
+    final Object? data = ModalRoute.of(context)?.settings.arguments;
+    String url = (data is Map) ? data['url'] : "";
+    String title = (data is Map) ? data['title'] : "";
+
+    if (url.length == 0) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Url is Empty"),),
+      );
+    }
+
     return WebviewScaffold(
-      url: url,
+      url: Uri.decodeComponent(url),
+      debuggingEnabled: kReleaseMode ? false : true,
       withLocalStorage: true,
       withJavascript: true,
-      hidden: true,
+      hidden: false,
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(Get.parameters['title']!, style: TextStyle(fontSize: 15)),
+        title: Text(title, style: TextStyle(fontSize: 15)),
         titleSpacing: 0,
         actions: <Widget>[
           IconButton(

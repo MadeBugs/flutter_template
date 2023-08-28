@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/router/router.dart';
 
 /// 资讯列表详情
 class ArticleListItem extends StatelessWidget {
@@ -37,7 +36,7 @@ class ArticleListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          XRouter.goWeb(articleUrl, title);
+          Navigator.of(context).pushNamed("/web", arguments: {"url": articleUrl, "title": title});
         },
         child: Card(
           clipBehavior: Clip.antiAlias,

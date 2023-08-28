@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/utils/sputils.dart';
-import 'package:get/get.dart';
 
 //类似广告启动页
 class SplashPage extends StatefulWidget {
@@ -32,6 +31,6 @@ class _SplashPageState extends State<SplashPage> {
 
   //页面跳转
   void goHomePage() {
-    Get.offNamed(SPUtils.isLogined() ? '/home' : '/login');
+    Navigator.of(context).pushNamedAndRemoveUntil(SPUtils.isLogined() ? '/home' : '/login', (route) => false);
   }
 }

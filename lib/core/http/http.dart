@@ -26,14 +26,13 @@ class XHttp {
       dio.interceptors.add(CookieManager(cookieJar));
     });
 
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-      (client) {
-    client.findProxy = (uri) {
-      // 设置代理服务器地址和端口号
-      return "PROXY 192.168.31.218:8888";
-    };
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+      client.findProxy = (uri) {
+        // 设置代理服务器地址和端口号
+        return "PROXY 192.168.31.218:8888";
+      };
+      client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      return null;
     };
 
     //添加拦截器
