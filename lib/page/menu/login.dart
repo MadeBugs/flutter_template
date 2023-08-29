@@ -11,7 +11,6 @@ import 'package:flutter_template/page/index.dart';
 import 'package:flutter_template/page/menu/register.dart';
 import 'package:flutter_template/utils/provider.dart';
 import 'package:flutter_template/utils/sputils.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   @override
