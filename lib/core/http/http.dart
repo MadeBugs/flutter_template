@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio/adapter.dart';
+// import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/core/utils/path.dart';
@@ -13,8 +14,8 @@ class XHttp {
   ///网络请求配置
   static final Dio dio = Dio(BaseOptions(
     baseUrl: "https://www.wanandroid.com",
-    connectTimeout: 5000,
-    receiveTimeout: 3000,
+    connectTimeout: Duration(milliseconds: 5000),
+    receiveTimeout: Duration(milliseconds: 3000),
   ));
 
   ///初始化dio
@@ -26,14 +27,17 @@ class XHttp {
       dio.interceptors.add(CookieManager(cookieJar));
     });
 
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      var client = HttpClient();
+
       client.findProxy = (uri) {
         // 设置代理服务器地址和端口号
-        return "PROXY 192.168.31.218:8888";
+        return "PROXY 192.168.2.8:8888";
       };
       client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-      return null;
+      return client;
     };
+
 
     //添加拦截器
     dio.interceptors
@@ -43,7 +47,7 @@ class XHttp {
     }, onResponse: (Response response, handler) {
       print("响应之前");
       return handler.next(response);
-    }, onError: (DioError e, handler) {
+    }, onError: (DioException e, handler) {
       print("错误之前");
       handleError(e);
       return handler.next(e);
@@ -51,21 +55,21 @@ class XHttp {
   }
 
   ///error统一处理
-  static void handleError(DioError e) {
+  static void handleError(DioException e) {
     switch (e.type) {
-      case DioErrorType.connectTimeout:
+      case DioExceptionType.connectionTimeout:
         print("连接超时");
         break;
-      case DioErrorType.sendTimeout:
+      case DioExceptionType.sendTimeout:
         print("请求超时");
         break;
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.receiveTimeout:
         print("响应超时");
         break;
-      case DioErrorType.response:
+      case DioExceptionType.badResponse:
         print("出现异常");
         break;
-      case DioErrorType.cancel:
+      case DioExceptionType.cancel:
         print("请求取消");
         break;
       default:
@@ -107,7 +111,7 @@ class XHttp {
         //进度
         print("$count $total");
       });
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       handleError(e);
     }
     return response.data;

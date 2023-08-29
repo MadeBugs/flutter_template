@@ -7,7 +7,7 @@ final appStatusProvider = StateNotifierProvider<AppTabIndex, int>((ref) {
   return AppTabIndex(TAB_HOME_INDEX);
 });
 
-final userProfileProvider = Provider<UserProfile>((ref) {
+final userProfileProvider = StateNotifierProvider<UserProfile, String?>((ref) {
   return UserProfile(SPUtils.getNickName());
 });
 
@@ -146,17 +146,14 @@ class LocaleModel extends StateNotifier<Locale?> {
 }
 
 ///用户账户信息
-class UserProfile with ChangeNotifier {
-  String? _nickName;
+class UserProfile extends StateNotifier<String?> {
+  String? nickName;
 
-  UserProfile(this._nickName);
+  UserProfile(this.nickName) : super(nickName ?? "");
 
-  String get nickName => _nickName ?? "";
-
-  set nickName(String nickName) {
-    _nickName = nickName;
+  void changeNickName(String nickName) {
+    state = nickName;
     SPUtils.saveNickName(nickName);
-    notifyListeners();
   }
 }
 

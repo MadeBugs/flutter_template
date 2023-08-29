@@ -39,7 +39,7 @@ class MenuDrawer extends ConsumerWidget {
                   ),
                   Expanded(
                       child: Text(
-                    value.nickName.length > 0 ? value.nickName : I18n.of(context)!.title,
+                    value == null ? I18n.of(context)!.title : value,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class MenuDrawer extends ConsumerWidget {
                   leading: Icon(XUIIcons.logout),
                   title: Text(I18n.of(context)!.logout),
                   onTap: () {
-                    value.nickName = "";
+                    ref.read(userProfileProvider.notifier).changeNickName("");
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => LoginPage(),

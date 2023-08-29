@@ -3,19 +3,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/core/http/http.dart';
 import 'package:flutter_template/core/utils/locale.dart';
-import 'package:flutter_template/core/utils/toast.dart';
 import 'package:flutter_template/generated/i18n.dart';
 import 'package:flutter_template/router/route_map.dart';
 import 'package:flutter_template/utils/provider.dart';
 import 'package:flutter_template/utils/sputils.dart';
+import '../core/utils/toast.dart';
 
 //默认App的启动
 class DefaultApp {
   //运行app
   static void run() {
     WidgetsFlutterBinding.ensureInitialized();
-    // initFirst().then((value) => runApp(Store.init(ToastUtils.init(MyApp()))));
-    initFirst().then((value) => runApp(Store.init(MyApp())));
+    initFirst().then((value) => runApp(Store.init(ToastUtils.init(MyApp()))));
     initApp();
   }
 

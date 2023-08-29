@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_template/core/http/http.dart';
 import 'package:flutter_template/core/utils/privacy.dart';
@@ -12,12 +13,12 @@ import 'package:flutter_template/utils/provider.dart';
 import 'package:flutter_template/utils/sputils.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   // 响应空白处的焦点的Node
   bool _isShowPassWord = false;
   FocusNode blankNode = FocusNode();
@@ -166,13 +167,6 @@ class _LoginPageState extends State<LoginPage> {
   void onSubmit(BuildContext context) {
     closeKeyboard(context);
 
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) {
-            return MainHomePage();
-          },
-        ));
-        return;
-
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -182,9 +176,7 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.black38,
             loadingView: SpinKitCircle(color: Colors.white),
           );
-        });
-
-    UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
+        });    
 
     XHttp.post("/user/login", {
       "username": _unameController.text,
@@ -192,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
     }).then((response) {
       Navigator.pop(context);
       if (response['errorCode'] == 0) {
-        userProfile.nickName = response['data']['nickname'];
+        ref.read(userProfileProvider.notifier).changeNickName(response['data']['nickname']);
         ToastUtils.toast(I18n.of(context)!.loginSuccess);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) {
